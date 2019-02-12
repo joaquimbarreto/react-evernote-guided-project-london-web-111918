@@ -2,15 +2,15 @@ import React, { Component } from "react";
 
 const notesAPI = "http://localhost:3000/api/v1/notes/";
 
-class NoteEditor extends Component {
+class NoteNew extends Component {
 	state = {
-		editingNote: null
+		newNote: null
 	};
 
 	handleChange = event => {
 		this.setState({
-			editingNote: {
-				...this.state.editingNote,
+			newNote: {
+				...this.state.newNote,
 				[event.target.name]: event.target.value
 			}
 		});
@@ -22,37 +22,35 @@ class NoteEditor extends Component {
 	};
 
 	updateNote = () => {
-		fetch(notesAPI + this.props.note.id, {
-			method: "PATCH",
+		fetch(notesAPI, {
+			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify(this.state.editingNote)
+			body: JSON.stringify(this.state.newNote)
 		})
 			.then(res => res.json())
-			.then(() =>
-				this.props.updateNotes(this.props.note.id, this.state.editingNote)
-			);
+			.then(() => this.props.addNewNote(this.state.newNote));
 	};
 
 	render() {
-		const { note, handleCancelClick } = this.props;
+		const { handleCancelClick } = this.props;
 		return (
 			<form className="note-editor" onSubmit={this.handleSubmit}>
 				<input
 					type="text"
 					name="title"
-					defaultValue={note.title}
+					placeholder="Title"
 					onChange={this.handleChange}
 				/>
 				<textarea
 					name="body"
-					defaultValue={note.body}
+					placeholder="Enter note ..."
 					onChange={this.handleChange}
 				/>
 				<div className="button-row">
 					<input className="button" type="submit" value="Save" />
-					<button type="button" onClick={() => handleCancelClick(note)}>
+					<button type="button" onClick={() => handleCancelClick()}>
 						Cancel
 					</button>
 				</div>
@@ -61,4 +59,4 @@ class NoteEditor extends Component {
 	}
 }
 
-export default NoteEditor;
+export default NoteNew;

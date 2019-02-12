@@ -6,15 +6,17 @@ import Content from "./Content";
 class NoteContainer extends Component {
 	state = {
 		showNote: null,
-		editNote: null
-	};
-
-	handleSideClick = note => {
-		this.setState({ showNote: note });
+		editNote: null,
+		newNote: false,
+		searchTerm: ""
 	};
 
 	handleEditClick = note => {
 		this.setState({ editNote: note });
+	};
+
+	handleSideClick = note => {
+		this.setState({ showNote: note, editNote: null });
 	};
 
 	handleCancelClick = note => {
@@ -23,21 +25,41 @@ class NoteContainer extends Component {
 			editNote: null
 		});
 	};
+	handleNewNoteClick = () => {
+		this.setState({
+			showNote: null,
+			editNote: null,
+			newNote: true
+		});
+	};
+
+	updateSearch = event => {
+		this.setState({
+			searchTerm: event.target.value
+		});
+	};
 
 	render() {
-		const { notes, updateNotes } = this.props;
-		const { showNote, editNote } = this.state;
+		const { notes, updateNotes, addNewNote } = this.props;
+		const { showNote, editNote, searchTerm, newNote } = this.state;
 		return (
 			<Fragment>
-				<Search />
+				<Search updateSearch={this.updateSearch} />
 				<div className="container">
-					<Sidebar notes={notes} handleSideClick={this.handleSideClick} />
+					<Sidebar
+						notes={notes}
+						searchTerm={searchTerm}
+						handleSideClick={this.handleSideClick}
+						handleNewNoteClick={this.handleNewNoteClick}
+					/>
 					<Content
-						showNote={showNote}
 						editNote={editNote}
-						handleEditClick={this.handleEditClick}
+						showNote={showNote}
+						newNote={newNote}
 						handleCancelClick={this.handleCancelClick}
 						updateNotes={updateNotes}
+						addNewNote={addNewNote}
+						handleEditClick={this.handleEditClick}
 					/>
 				</div>
 			</Fragment>

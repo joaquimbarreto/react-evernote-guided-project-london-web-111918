@@ -5,7 +5,7 @@ const NoteList = props => {
 	return (
 		<li onClick={() => props.handleSideClick(note)}>
 			<h2>{note.title}</h2>
-			<p>{note.body.substring(0, 45)}...</p>
+			<p>{note.body && note.body.substring(0, 45)}...</p>
 		</li>
 	);
 };

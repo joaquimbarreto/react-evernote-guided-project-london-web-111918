@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import NoteEditor from "./NoteEditor";
 import NoteViewer from "./NoteViewer";
 import Instructions from "./Instructions";
+import NoteNew from "./NoteNew";
 
 class Content extends Component {
 	renderContent = () => {
 		const {
-			editNote,
 			showNote,
+			editNote,
+			newNote,
 			handleCancelClick,
 			updateNotes,
+			addNewNote,
 			handleEditClick
 		} = this.props;
 		if (editNote) {
@@ -22,6 +25,14 @@ class Content extends Component {
 			);
 		} else if (showNote) {
 			return <NoteViewer note={showNote} handleEditClick={handleEditClick} />;
+		} else if (newNote) {
+			return (
+				<NoteNew
+					handleEditClick={handleEditClick}
+					updateNotes={updateNotes}
+					addNewNote={addNewNote}
+				/>
+			);
 		} else {
 			return <Instructions />;
 		}

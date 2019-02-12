@@ -3,13 +3,20 @@ import NoteList from "./NoteList";
 
 class Sidebar extends Component {
 	render() {
+		const {
+			notes,
+			handleSideClick,
+			searchTerm,
+			handleNewNoteClick
+		} = this.props;
 		return (
 			<div className="master-detail-element sidebar">
 				<NoteList
-					notes={this.props.notes}
-					handleSideClick={this.props.handleSideClick}
+					notes={notes}
+					handleSideClick={handleSideClick}
+					searchTerm={searchTerm}
 				/>
-				<button>New</button>
+				<button onClick={() => handleNewNoteClick()}>New</button>
 			</div>
 		);
 	}

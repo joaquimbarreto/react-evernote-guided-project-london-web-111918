@@ -17,10 +17,13 @@ class App extends Component {
 
 	updateNotes = (id, editedNote) => {
 		const newNotes = this.state.notes.map(note => {
-			return note.id === id ? (note = { ...editedNote }) : note;
+			return note.id === id ? (note = editedNote) : note;
 		});
-		console.log(newNotes);
 		this.setState({ notes: newNotes });
+	};
+
+	addNewNote = newNote => {
+		this.setState({ notes: this.state.notes, newNote });
 	};
 
 	render() {
@@ -30,6 +33,7 @@ class App extends Component {
 				<NoteContainer
 					notes={this.state.notes}
 					updateNotes={this.updateNotes}
+					addNewNote={this.addNewNote}
 				/>
 			</div>
 		);
